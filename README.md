@@ -312,8 +312,14 @@ Botão direito do rato na solução -> Manage MuGet Packages for solution
             return await Task.FromResult(items);
         }
         
- ```       
+ ```   
+ Alterar o model Item para adaptar à nossa API. Neste caso necessitamos Title e Speaker
   ## Alterar Model (18)
+ O DeserializeObject poderá ser ugualado ao objecto do nosso modelo, directamente. 
+     var Items = JsonConvert.DeserializeObject<List<Item>>(Workshops);
+     items.Add(workshop);
+
+Refactor das proriedades do model.
   ### Item.cs (19)
   ```c#
       public class Item
@@ -323,7 +329,10 @@ Botão direito do rato na solução -> Manage MuGet Packages for solution
         public string Speaker { get; set; }  // Rename !!! (refactoring)
         // Criar um novo MODEL ou alterar este (vou alterar este)
     }
- ```   
+ ```
+ 
+ O rename/refactor não altera as Views Xaml .. alterar onde é necessário
+ <Label Text="{Binding Title}" 
  #### Alterar View ItemsPage.xaml (Title e Speaker, item model) (20)
 ```xaml
              <ListView.ItemTemplate>
@@ -343,6 +352,7 @@ Botão direito do rato na solução -> Manage MuGet Packages for solution
                 </DataTemplate>
             </ListView.ItemTemplate>
 ```
+.. alterar onde é necessário
 #### Alterar View ItemDetailPage.xaml (Title e speaker, item model) (21)
 ```xaml
     <StackLayout Spacing="20" Padding="15">
@@ -354,7 +364,10 @@ Botão direito do rato na solução -> Manage MuGet Packages for solution
 
 ```
  # Parte 3 -  Enviar item, Authorization Token (JWT) (22)
+ Para enviar um novo item para o endpoint da API (/api/workshops) criar um novo método no serviço.
  
+ Novo formContent para receber do utilizador.
+ Novo client com token no header
  ### ApiServices (adiconar método) (23)
  ```c#
        public async Task<string> WorkshopPostAsync(String accessToken, Item item) 
@@ -369,6 +382,7 @@ Botão direito do rato na solução -> Manage MuGet Packages for solution
             using (var client = new HttpClient()) // client http para enviar request
             {
                 client.Timeout = TimeSpan.FromMilliseconds(20000); // evitar o freeze no mobile, boa experiência de utilização
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(accessToken); // autorize
                 var response = await client.PostAsync(Constantes.BaseApiAddress + "/api/workshops", formContent); // resposta do post
 
                 if (response.IsSuccessStatusCode)
@@ -381,6 +395,7 @@ Botão direito do rato na solução -> Manage MuGet Packages for solution
             }
         }
 ```
+Na fataStore Alterar a função AddItemAsync() para adicionar um novo item.
 ### MockupDataStore.cs (alterar método AddItemAsync) (24)
 ```c#
         public async Task<bool> AddItemAsync(Item item)
