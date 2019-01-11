@@ -2,6 +2,16 @@
 ![Image of IPG](https://github.com/daeynasvistas/WorkShop_Xamarin/blob/Vers.01/AppIPG/AppIPG.Android/Resources/drawable/IPG_M.jpg?raw=true)
 
 # Primeira Parte (Login)
+Criar um novo ContentPage com o nome: LoginPage, na pasta Views. (Direito na pasta -> Add -> New item -> Escolher ContentPage)
+nome:LoginView.xaml
+
+Alterar Aspecto da View, colocando Dentro do StackLayout, duas Entry (Escolher da toolbox, arastar)
+Arastar da toolbox um button para fora da stackLayout
+
+x:Name="Email" <- para poder ser chamado no code-behind
+Text="{Binding Email}" <- Binding entre xaml e cs
+Placeholder="Email" <- Identificador
+Keyboard="Email" <- treclado dispositivo
 #### LoginPage.xaml (1)
 ```xaml
     <ContentPage.Content>
@@ -11,10 +21,13 @@
                 <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email" Keyboard="Email"/>
                 <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password" IsPassword="True"/>
             </StackLayout>
-            <Button Command="{Binding LoginCommand}" Text="Login"/>
+            <Button Command="{Binding LoginCommand}" Text="Login"/>, 
         </StackLayout>
     </ContentPage.Content>
 ```
+ 
+
+
 ### LoginPage.cs  (2)
 ```c#
     InitializeComponent ();
