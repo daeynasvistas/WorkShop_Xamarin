@@ -8,6 +8,7 @@ nome:LoginView.xaml
 Alterar Aspecto da View, colocando Dentro do StackLayout, duas Entry (Escolher da toolbox, arastar)
 Arastar da toolbox um button para fora da stackLayout
 
+![1](https://user-images.githubusercontent.com/32745683/51057394-63eddf00-15dd-11e9-9972-e83942e7cd02.PNG)
 Arastar controlo Image e alterar as propriedades. Enviar a imagem para o projecto Android (em Resource -> Drawable)
 
 #### LoginPage.xaml (1)
@@ -135,7 +136,7 @@ Adicionar validações e erros "DisplayInvalidLoginPrompt"
         }
  ```
 Criar novo método onSubmit() para workflow do login .. Se email ou password inválido, msg de erro
-
+![2](https://user-images.githubusercontent.com/32745683/51057395-63eddf00-15dd-11e9-81ca-dc4a9ca3425e.PNG)
 
 
 Para Aceder à API, criar um serviço. Este servico irá ocupar-se exclusivamente disso mesmo.
@@ -177,6 +178,7 @@ Este é um método simples mas pouco eficaz de tratar JSON. Mais à frente insta
         }
 
 ```
+
 ## Criar Helpers Folder  (8)
 Criar uma nova pasta Helpers na raiz do projecto (Models, Services, ViewModels,View e Helpers)
 ### Class Constantes  (9)
@@ -247,6 +249,37 @@ Alterar método OnSubmit() para mostrar MainPage quando login for válido e erro
 A view é responsável pelas informações ao utilizador:
 vm.DisplayInvalidLoginPrompt <-- DisplayInvalidLoginPrompt();
 vm.DisplayMainPage  <--  DisplayMainPage();
+
+## O Meu novo servico de Login (ApiSercices -> )
+```C#
+        public async Task<string> LoginAsync(string email, string password) 
+        {
+            var formContent = new FormUrlEncodedContent(new[] // o que vem do formulário
+               {
+                new KeyValuePair<string, string>("email", email), // aqui pede email e não username (API)   
+                new KeyValuePair<string, string>("password", password)
+                });
+
+            using (var client = new HttpClient()) // client http para enviar request
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(20000); // evitar o freeze no mobile, boa experiência de utilização
+                var response = await client.PostAsync(Constantes.BaseApiAddress + "/api/Users/login", formContent); // resposta do post
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // great success
+                    string content = await response.Content.ReadAsStringAsync();
+                    var tokens = content.Split('"'); // método SIMPLES para não utilizar livraria JSON
+                    AccessToken = tokens[3]; // local onde está o token depois do split
+                    return AccessToken;
+                }
+            return null; // problema, login inválido
+            }
+ ```   
+ Login Inválido (token=null)
+![3](https://user-images.githubusercontent.com/32745683/51057396-63eddf00-15dd-11e9-8f36-982c8742b20c.PNG)
+Login OK (Token!=null)
+![4](https://user-images.githubusercontent.com/32745683/51057695-3ce3dd00-15de-11e9-8c00-3b1f067eaa9d.PNG)
 
 
  # Parte 2 -  Receber todos Items, Authorization Token (JWT) (14)
