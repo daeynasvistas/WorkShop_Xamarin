@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppIPG.Views.LoginPage">
+    <ContentPage.Content>
+
+        <StackLayout Orientation="Vertical" Padding="30" Spacing="40">
+            <Image HorizontalOptions="Center" WidthRequest="120" Source="IPG_M.jpg" />
+
+            <StackLayout Orientation="Vertical" Spacing="10">
+                <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email" Keyboard="Email"/>
+                <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password" IsPassword="True"/>
+            </StackLayout>
+
+            <Button Command="{Binding LoginCommand}" Text="Login"/>
+
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>
