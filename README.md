@@ -8,10 +8,8 @@ nome:LoginView.xaml
 Alterar Aspecto da View, colocando Dentro do StackLayout, duas Entry (Escolher da toolbox, arastar)
 Arastar da toolbox um button para fora da stackLayout
 
-  - x:Name="Email" <- para poder ser chamado no code-behind
-  - Text="{Binding Email}" <- Binding entre xaml e cs
-  - Placeholder="Email" <- Identificador
-  - Keyboard="Email" <- treclado dispositivo
+Arastar controlo Image e alterar as propriedades. Enviar a imagem para o projecto Android (em Resource -> Drawable)
+
 #### LoginPage.xaml (1)
 ```xaml
     <ContentPage.Content>
@@ -25,10 +23,14 @@ Arastar da toolbox um button para fora da stackLayout
         </StackLayout>
     </ContentPage.Content>
 ```
- 
+  - x:Name="Email" <- para poder ser chamado no code-behind
+  - Text="{Binding Email}" <- Binding entre xaml e cs
+  - Placeholder="Email" <- Identificador
+  - Keyboard="Email" <- teclado dispositivo 
 
 
 ### LoginPage.cs  (2)
+Alterar LoginPage.cs para poder controlar o focus
 ```c#
     InitializeComponent ();
     Email.Completed += (object sender, EventArgs e) =>
@@ -42,6 +44,9 @@ Arastar da toolbox um button para fora da stackLayout
 ```
 
 ### LoginViewModel.cs  (3)
+Criar um ViewModel para controlar a View acabada de criar. Criar em ViewModels -> LoginViewModel.cs
+
+
 ```c#
         public event PropertyChangedEventHandler PropertyChanged;
         // ---   Private and getter setter EMAIL
@@ -67,6 +72,8 @@ Arastar da toolbox um button para fora da stackLayout
             }
         }
 ```
+Editar Criando email e password e os get e set
+
 #### LoginViewModel.cs  (4)
 ```c#
         public ICommand LoginCommand
@@ -80,6 +87,9 @@ Arastar da toolbox um button para fora da stackLayout
             }
         }
 ```
+Criar um Command para ser acedido a partir da view -> LoginCommand
+
+
 #### LoginPage.cs  (5)
 ```c# 
    // binding VIEW <-> VIEWMODEL
@@ -88,8 +98,11 @@ Arastar da toolbox um button para fora da stackLayout
   // display errors in VIEW (Separação entre view e vewmodel)
   vm.DisplayInvalidLoginPrompt += () => DisplayAlert("Error", "Login Inválido, tentar novamente", "OK");
   vm.DisplayMainPage += () => App.Current.MainPage = new MainPage();
+```
+Na LoginPage.cs fazer o binding entre a view e o viewmodel
+Adicionar validações e erros "DisplayInvalidLoginPrompt"
 
-```       
+
 #### LoginViewModel.cs  (6)
 ```c#
         public ICommand LoginCommand
@@ -120,6 +133,19 @@ Arastar da toolbox um button para fora da stackLayout
             }
         }
  ```
+Criar novo método onSubmit() para workflow do login .. Se email ou password inválido, msg de erro
+
+
+
+Para Aceder à API, criar um serviço. Este servico irá ocupar-se exclusivamente disso mesmo.
+FormContent passa a ser um keyValuePair do email e password intrduzido pelo utilizador.
+
+Instanciamos um novo HttpClient() para fazer o request (client)
+Obtemos resposta do request na variável response
+Se resposta OK. O login é válido
+Explodimos a string content e retiramos unicamente o token.
+Este é um método simples mas pouco eficaz de tratar JSON. Mais à frente instalaremos uma libraria para isso.
+
 #### ApiServices.cs  (7)
 ```c#
         private static string AccessToken;
@@ -151,7 +177,9 @@ Arastar da toolbox um button para fora da stackLayout
 
 ```
 ## Criar Helpers Folder  (8)
+Criar uma nova pasta Helpers na raiz do projecto (Models, Services, ViewModels,View e Helpers)
 ### Class Constantes  (9)
+Uma class contantes.cs irá permitir colocar as configurações da App. (BaseApiAddress neste momento)
 #### Constantes.cs  (10)
 ```c#
     public static class Constantes
@@ -161,7 +189,9 @@ Arastar da toolbox um button para fora da stackLayout
     
 ```
 ## Class AccountDetailsStore (11)
+é necessário guardar o token para as subsequentes chamadas à API (Cada Requeste deve ser autorizada, enviando o token no header da request)
 ### AccountDetailsStore.cs (12)
+Numa App de produção, devemos utilizar outro método, guarda nas settings por exemplo (https://www.nuget.org/packages/Xam.Plugins.Settings/)
 ```c#
     public sealed class AccountDetailsStore
     {
@@ -172,6 +202,8 @@ Arastar da toolbox um button para fora da stackLayout
         public string Token { get; set; }
     }
  ```   
+ 
+O ViewModel passa então a guardar o token que vem do submit na store AccountDetailStore (simples e eficaz)
 #### LoginViewModel.cs (13)
 ```c#
       // --------- add Command
@@ -209,6 +241,8 @@ Arastar da toolbox um button para fora da stackLayout
         }
  
 ``` 
+Alterar método OnSubmit() para mostrar MainPage quando login for válido e error quando login errado
+
  # Parte 2 -  Receber todos Items, Authorization Token (JWT) (14)
  
  ### MockDataStore.cs (15)
