@@ -25,6 +25,9 @@ Arastar controlo Image e alterar as propriedades. Enviar a imagem para o project
         </StackLayout>
     </ContentPage.Content>
 ```
+
+| Command | Description |
+| --- | --- |
 | x:Name="Email" | para poder ser chamado no code-behind |
 | Text="{Binding Email}" | Binding entre xaml e cs |
 | Placeholder="Email" | para poder ser chamado no code-behind |
