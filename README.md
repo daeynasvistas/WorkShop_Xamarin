@@ -25,10 +25,10 @@ Arastar controlo Image e alterar as propriedades. Enviar a imagem para o project
         </StackLayout>
     </ContentPage.Content>
 ```
-  - x:Name="Email" <- para poder ser chamado no code-behind
-  - Text="{Binding Email}" <- Binding entre xaml e cs
-  - Placeholder="Email" <- Identificador
-  - Keyboard="Email" <- teclado dispositivo 
+| x:Name="Email" | para poder ser chamado no code-behind |
+| Text="{Binding Email}" | Binding entre xaml e cs |
+| Placeholder="Email" | para poder ser chamado no code-behind |
+| Keyboard="Email" | teclado dispositivo |
   
 ![xamarin--2019-jan-10-015](https://user-images.githubusercontent.com/2634610/51051516-e2418580-15cb-11e9-8365-9eac358b85d5.jpg)
 
