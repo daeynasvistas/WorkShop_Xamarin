@@ -8,10 +8,10 @@ nome:LoginView.xaml
 Alterar Aspecto da View, colocando Dentro do StackLayout, duas Entry (Escolher da toolbox, arastar)
 Arastar da toolbox um button para fora da stackLayout
 
-x:Name="Email" <- para poder ser chamado no code-behind
-Text="{Binding Email}" <- Binding entre xaml e cs
-Placeholder="Email" <- Identificador
-Keyboard="Email" <- treclado dispositivo
+  - x:Name="Email" <- para poder ser chamado no code-behind
+  - Text="{Binding Email}" <- Binding entre xaml e cs
+  - Placeholder="Email" <- Identificador
+  - Keyboard="Email" <- treclado dispositivo
 #### LoginPage.xaml (1)
 ```xaml
     <ContentPage.Content>
