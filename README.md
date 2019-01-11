@@ -15,7 +15,7 @@
     </ContentPage.Content>
 
 ### LoginPage.cs  (2)
-
+```c#
     InitializeComponent ();
     Email.Completed += (object sender, EventArgs e) =>
        {
@@ -25,7 +25,7 @@
        {
         // do the magic
        };
-
+```
 
 ### LoginViewModel.cs  (3)
 
