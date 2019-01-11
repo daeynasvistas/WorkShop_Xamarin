@@ -414,7 +414,8 @@ Na fataStore Alterar a função AddItemAsync() para adicionar um novo item.
         }
 ```
 
-![screenshot_20190110-214214](https://user-images.githubusercontent.com/2634610/51051670-6431ae80-15cc-11e9-8617-9ccece9516d9.png)
-![screenshot_20190110-214235](https://user-images.githubusercontent.com/2634610/51051671-6431ae80-15cc-11e9-98fe-61cee17f7e0e.png)
-![screenshot_20190110-214309](https://user-images.githubusercontent.com/2634610/51051672-64ca4500-15cc-11e9-8fa5-cc57bf2ce0ab.png)
+![screenshot_20190110-214214](https://user-images.githubusercontent.com/2634610/51051864-f043d600-15cc-11e9-9bb0-fecba4cf0807.png)
+![screenshot_20190110-214235](https://user-images.githubusercontent.com/2634610/51051866-f043d600-15cc-11e9-875e-4345999f78c0.png)
+![screenshot_20190110-214309](https://user-images.githubusercontent.com/2634610/51051867-f043d600-15cc-11e9-85ae-d2b1f7d361d8.png)
+
         
