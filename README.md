@@ -1,7 +1,7 @@
 # WorkShop Xamarin (@IPG)
 
 ### Primeira Parte (Login)
-#### LoginPage.xaml
+#### LoginPage.xaml (1)
 
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="30" Spacing="40">
@@ -14,7 +14,7 @@
         </StackLayout>
     </ContentPage.Content>
 
-### LoginPage.cs
+### LoginPage.cs  (2)
 
     InitializeComponent ();
     Email.Completed += (object sender, EventArgs e) =>
@@ -27,7 +27,7 @@
        };
 
 
-### LoginViewModel.cs
+### LoginViewModel.cs  (3)
 
         public event PropertyChangedEventHandler PropertyChanged;
         // ---   Private and getter setter EMAIL
@@ -53,7 +53,7 @@
             }
         }
 
-#### LoginViewModel.cs
+#### LoginViewModel.cs  (4)
 
         public ICommand LoginCommand
         {
@@ -66,7 +66,7 @@
             }
         }
 
-#### LoginPage.cs
+#### LoginPage.cs  (5)
             // binding VIEW <-> VIEWMODEL
             var vm = new LoginViewModel();
             this.BindingContext = vm;
@@ -75,7 +75,7 @@
             vm.DisplayMainPage += () => App.Current.MainPage = new MainPage();
 
        
-#### LoginViewModel.cs
+#### LoginViewModel.cs  (6)
         public ICommand LoginCommand
         {
             get
@@ -103,8 +103,8 @@
                 DisplayMainPage();
             }
         }
-
-#### ApiServices.cs
+ 
+#### ApiServices.cs  (7)
         private static string AccessToken;
         public async Task<string> LoginAsync(string email, string password) 
         {
@@ -133,17 +133,17 @@
         }
 
 
-# Criar Helpers Folder
-## Class Constantes
-#### Constantes.cs
+# Criar Helpers Folder  (8)
+## Class Constantes  (9)
+#### Constantes.cs  (10)
     public static class Constantes
     {
         public static string BaseApiAddress => "https://workshop-ipg.azurewebsites.net"; // api base para ser utilizado em vários locais
     }
     
 
-## Class AccountDetailsStore
-### AccountDetailsStore.cs
+## Class AccountDetailsStore (11)
+### AccountDetailsStore.cs (12)
     public sealed class AccountDetailsStore
     {
         private AccountDetailsStore() { }
@@ -153,7 +153,7 @@
         public string Token { get; set; }
     }
     
-#### LoginViewModel.cs
+#### LoginViewModel.cs (13)
       // --------- add Command
         private readonly ApiServices _apiServices = new ApiServices(); // instanciar apiservice
         public ICommand LoginCommand
@@ -189,9 +189,9 @@
         }
  
  
- # Receber todos Items, Authorization Token (JWT)
+ # Receber todos Items, Authorization Token (JWT) (14)
  
- ### MockDataStore.cs
+ ### MockDataStore.cs (15)
  
         List<Item> items;
         private readonly ApiServices _apiServices = new ApiServices();
@@ -200,7 +200,7 @@
             items = new List<Item>(); <-- remover o dummy data criar uma collection vazia
         }
         
- ### ApiServices.cs
+ ### ApiServices.cs (16)
          public async Task<string> WorkshopAsync(String accessToken)
         {
             using (var client = new HttpClient())
@@ -214,7 +214,7 @@
 
         }
 
-### MockupDataStore.cs
+### MockupDataStore.cs (17)
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
             var accessToken = AccountDetailsStore.Instance.Token;   
@@ -230,8 +230,8 @@
         }
         
         
-  ## Alterar Model
-  ### Item.cs
+  ## Alterar Model (18)
+  ### Item.cs (19)
       public class Item
     {
         public string Id { get; set; }
@@ -240,7 +240,7 @@
         // Criar um novo MODEL ou alterar este (vou alterar este)
     }
     
- #### Alterar View ItemsPage.xaml (Title e Speaker, item model)
+ #### Alterar View ItemsPage.xaml (Title e Speaker, item model) (20)
              <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -258,7 +258,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
 
-#### Alterar View ItemDetailPage.xaml (Title e speaker, item model)
+#### Alterar View ItemDetailPage.xaml (Title e speaker, item model) (21)
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Title:" FontSize="Medium" />
         <Label Text="{Binding Item.Title}" FontSize="Small"/>
@@ -267,8 +267,8 @@
     </StackLayout>
 
 
- # Enviar item, Authorization Token (JWT)
- ### ApiServices (adiconar método)
+ # Enviar item, Authorization Token (JWT) (22)
+ ### ApiServices (adiconar método) (23)
        public async Task<string> WorkshopPostAsync(String accessToken, Item item) 
         {
             var formContent = new FormUrlEncodedContent(new[] // o que vem do formulário
@@ -293,7 +293,7 @@
             }
         }
 
-### MockupDataStore.cs (alterar método AddItemAsync)
+### MockupDataStore.cs (alterar método AddItemAsync) (24)
         public async Task<bool> AddItemAsync(Item item)
         {
             var accessToken = AccountDetailsStore.Instance.Token;
