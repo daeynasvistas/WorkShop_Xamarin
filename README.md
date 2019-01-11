@@ -189,6 +189,83 @@
         }
  
  
- ### Fim Primeira Parte (Login)
+ # Receber todos Items, Authorization Token (JWT)
  
+ ### MockDataStore.cs
+ 
+        List<Item> items;
+        private readonly ApiServices _apiServices = new ApiServices();
+        public MockDataStore()
+        {
+            items = new List<Item>(); <-- remover o dummy data criar uma collection vazia
+        }
+        
+ ### ApiServices.cs
+         public async Task<string> WorkshopAsync(String accessToken)
+        {
+            using (var client = new HttpClient())
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(20000);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(accessToken); // autorize
+                var response = await client.GetAsync(Constantes.BaseApiAddress + "/api/workshops"); // EndPoint da API
+                string content = await response.Content.ReadAsStringAsync();
+                return content;
+            }
+
+        }
+
+### MockupDataStore.cs
+        public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
+        {
+            var accessToken = AccountDetailsStore.Instance.Token;   
+            var Workshops = await _apiServices.WorkshopAsync(accessToken); //<- fazer o get no endpoint
+            // utilizar uma libraria para parse do JSON --- Download no nuGet
+            var Items = JsonConvert.DeserializeObject<List<Item>>(Workshops); <-- Adicionar com NuGet
+            foreach (var workshop in Items)
+            {
+                items.Add(workshop);
+            }
+
+            return await Task.FromResult(items);
+        }
+        
+        
+  ## Alterar Model
+  ### Item.cs
+      public class Item
+    {
+        public string Id { get; set; }
+        public string Title { get; set; } // Rename !!! (refactoring)
+        public string Speaker { get; set; }  // Rename !!! (refactoring)
+        // Criar um novo MODEL ou alterar este (vou alterar este)
+    }
+    
+ ## Alterar View ItemsPage.xaml (Title e Speaker, item model)
+             <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Title}" 
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="16" />
+                            <Label Text="{Binding Speaker}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+## Alterar View ItemDetailPage.xaml (Title e speaker, item model)
+    <StackLayout Spacing="20" Padding="15">
+        <Label Text="Title:" FontSize="Medium" />
+        <Label Text="{Binding Item.Title}" FontSize="Small"/>
+        <Label Text="Speaker:" FontSize="Medium" />
+        <Label Text="{Binding Item.Speaker}" FontSize="Small"/>
+    </StackLayout>
+
+
+ # Enviar item, Authorization Token (JWT)
  
