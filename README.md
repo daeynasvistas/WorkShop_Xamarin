@@ -367,6 +367,10 @@ Refactor das proriedades do model.
  Para enviar um novo item para o endpoint da API (/api/workshops) criar um novo método no serviço.
  
  Novo formContent para receber do utilizador.
+ O nosso EndPoint pede o seguinte:
+ 
+ ![alt text](https://user-images.githubusercontent.com/2634610/51051209-09e41e00-15cb-11e9-9cba-cc4cad030be9.PNG)
+ 
  Novo client com token no header
  ### ApiServices (adiconar método) (23)
  ```c#
