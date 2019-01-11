@@ -27,7 +27,8 @@ Arastar controlo Image e alterar as propriedades. Enviar a imagem para o project
   - Text="{Binding Email}" <- Binding entre xaml e cs
   - Placeholder="Email" <- Identificador
   - Keyboard="Email" <- teclado dispositivo 
-
+  
+![xamarin--2019-jan-10-015](https://user-images.githubusercontent.com/2634610/51051516-e2418580-15cb-11e9-8365-9eac358b85d5.jpg)
 
 ### LoginPage.cs  (2)
 Alterar LoginPage.cs para poder controlar o focus
@@ -368,8 +369,8 @@ Refactor das proriedades do model.
  
  Novo formContent para receber do utilizador.
  O nosso EndPoint pede o seguinte:
+  ![alt text](https://user-images.githubusercontent.com/2634610/51051209-09e41e00-15cb-11e9-9cba-cc4cad030be9.PNG)
  
- ![alt text](https://user-images.githubusercontent.com/2634610/51051209-09e41e00-15cb-11e9-9cba-cc4cad030be9.PNG)
  
  Novo client com token no header
  ### ApiServices (adiconar método) (23)
