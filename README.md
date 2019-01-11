@@ -241,11 +241,21 @@ O ViewModel passa então a guardar o token que vem do submit na store AccountDet
         }
  
 ``` 
-Alterar método OnSubmit() para mostrar MainPage quando login for válido e error quando login errado
+Alterar método OnSubmit() para mostrar MainPage quando login for válido e error quando login errado.
+
+A view é responsável pelas informações ao utilizador:
+vm.DisplayInvalidLoginPrompt <-- DisplayInvalidLoginPrompt();
+vm.DisplayMainPage  <--  DisplayMainPage();
+
 
  # Parte 2 -  Receber todos Items, Authorization Token (JWT) (14)
  
- ### MockDataStore.cs (15)
+ Para receber todos os Items da API no endpoint: /api/workshops
+ Este EndPoint tem ACL, Anonymous deny
+ Necessário enviar token para identificar utilizador válido.
+ 
+ Remover os dummy data. e ficar só com a collection items 
+  ### MockDataStore.cs (15)
  ```c#
         List<Item> items;
         private readonly ApiServices _apiServices = new ApiServices();
@@ -253,7 +263,15 @@ Alterar método OnSubmit() para mostrar MainPage quando login for válido e erro
         {
             items = new List<Item>(); <-- remover o dummy data criar uma collection vazia
         }
- ```       
+ ```
+ 
+ 
+ Necessário criar um novo método para o GET do endpoint /api/workshops
+ É um serviço -> ApiServices responsável.
+ 
+ Novo HttpClient -> client
+ Client esse passa incluir o Token no request
+ Return response 
  ### ApiServices.cs (16)
  ```c#
          public async Task<string> WorkshopAsync(String accessToken)
@@ -269,6 +287,13 @@ Alterar método OnSubmit() para mostrar MainPage quando login for válido e erro
 
         }
 ```
+
+A gestão do dados está na dataStore MockupDataStore.cs
+Neste método utilizaremos uma libraria para fazer o serialize do JSON
+
+Devemos para isso adicionar a mesma ao projecto, utilizando o nuGet. 
+Botão direito do rato na solução -> Manage MuGet Packages for solution
+
 ### MockupDataStore.cs (17)
 ```c#
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
