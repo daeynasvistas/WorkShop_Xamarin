@@ -1,6 +1,6 @@
 # WorkShop Xamarin (@IPG)
 
-### Primeira Parte (Login)
+# Primeira Parte (Login)
 #### LoginPage.xaml (1)
 ```xaml
     <ContentPage.Content>
@@ -136,8 +136,8 @@
         }
 
 ```
-# Criar Helpers Folder  (8)
-## Class Constantes  (9)
+## Criar Helpers Folder  (8)
+### Class Constantes  (9)
 #### Constantes.cs  (10)
 ```c#
     public static class Constantes
@@ -195,7 +195,7 @@
         }
  
 ``` 
- # Receber todos Items, Authorization Token (JWT) (14)
+ # Parte 2 -  Receber todos Items, Authorization Token (JWT) (14)
  
  ### MockDataStore.cs (15)
  ```c#
@@ -278,7 +278,8 @@
     </StackLayout>
 
 ```
- # Enviar item, Authorization Token (JWT) (22)
+ # Parte 3 -  Enviar item, Authorization Token (JWT) (22)
+ 
  ### ApiServices (adiconar método) (23)
  ```c#
        public async Task<string> WorkshopPostAsync(String accessToken, Item item) 
