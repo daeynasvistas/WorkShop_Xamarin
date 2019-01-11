@@ -2,7 +2,7 @@
 
 ### Primeira Parte (Login)
 #### LoginPage.xaml (1)
-
+```xaml
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="30" Spacing="40">
             <Image HorizontalOptions="Center" WidthRequest="120" Source="IPG_M.jpg" />
@@ -13,7 +13,7 @@
             <Button Command="{Binding LoginCommand}" Text="Login"/>
         </StackLayout>
     </ContentPage.Content>
-
+```
 ### LoginPage.cs  (2)
 ```c#
     InitializeComponent ();
@@ -248,7 +248,7 @@
         public string Speaker { get; set; }  // Rename !!! (refactoring)
         // Criar um novo MODEL ou alterar este (vou alterar este)
     }
-    
+ ```   
  #### Alterar View ItemsPage.xaml (Title e Speaker, item model) (20)
 ```xaml
              <ListView.ItemTemplate>
