@@ -11,6 +11,7 @@ Arastar da toolbox um button para fora da stackLayout
 ![1](https://user-images.githubusercontent.com/32745683/51057394-63eddf00-15dd-11e9-9972-e83942e7cd02.PNG)
 
 Arastar controlo Image e alterar as propriedades. Enviar a imagem para o projecto Android (em Resource -> Drawable)
+
 ![xamarin--2019-jan-10-015](https://user-images.githubusercontent.com/2634610/51051516-e2418580-15cb-11e9-8365-9eac358b85d5.jpg)
 
 #### LoginPage.xaml (1)
