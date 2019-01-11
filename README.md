@@ -240,7 +240,7 @@
         // Criar um novo MODEL ou alterar este (vou alterar este)
     }
     
- ## Alterar View ItemsPage.xaml (Title e Speaker, item model)
+ #### Alterar View ItemsPage.xaml (Title e Speaker, item model)
              <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -258,7 +258,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
 
-## Alterar View ItemDetailPage.xaml (Title e speaker, item model)
+#### Alterar View ItemDetailPage.xaml (Title e speaker, item model)
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Title:" FontSize="Medium" />
         <Label Text="{Binding Item.Title}" FontSize="Small"/>
@@ -268,4 +268,41 @@
 
 
  # Enviar item, Authorization Token (JWT)
- 
+ ### ApiServices (adiconar método)
+       public async Task<string> WorkshopPostAsync(String accessToken, Item item) 
+        {
+            var formContent = new FormUrlEncodedContent(new[] // o que vem do formulário
+               {
+                new KeyValuePair<string, string>("title", item.Title),  
+                new KeyValuePair<string, string>("speaker", item.Speaker),
+                new KeyValuePair<string, string>("date", DateTime.Now.ToString())
+                });
+
+            using (var client = new HttpClient()) // client http para enviar request
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(20000); // evitar o freeze no mobile, boa experiência de utilização
+                var response = await client.PostAsync(Constantes.BaseApiAddress + "/api/workshops", formContent); // resposta do post
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // great success
+                    string content = await response.Content.ReadAsStringAsync();
+                    return content;
+                }
+                return null; // problema, token inválido
+            }
+        }
+
+### MockupDataStore.cs (alterar método AddItemAsync)
+        public async Task<bool> AddItemAsync(Item item)
+        {
+            var accessToken = AccountDetailsStore.Instance.Token;
+            var Workshops = await _apiServices.WorkshopPostAsync(accessToken, item); //<- fazer o get no endpoint
+
+            items.Add(item);
+
+            return await Task.FromResult(true);
+        }
+
+
+        
