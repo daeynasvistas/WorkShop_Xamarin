@@ -294,6 +294,8 @@ Neste método utilizaremos uma libraria para fazer o serialize do JSON
 Devemos para isso adicionar a mesma ao projecto, utilizando o nuGet. 
 Botão direito do rato na solução -> Manage MuGet Packages for solution
 
+![alt text](https://user-images.githubusercontent.com/2634610/51049730-a821b500-15c6-11e9-8df1-27cae6d4bebe.PNG)
+
 ### MockupDataStore.cs (17)
 ```c#
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
