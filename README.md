@@ -51,6 +51,16 @@ Alterar LoginPage.cs para poder controlar o focus
        };
 ```
 
+Alterar a MainPage para a nossa nova LoginPage
+### App.cs
+```c#
+        public App()
+        {
+            InitializeComponent();
+            MainPage = new LoginPage();
+            // MainPage = new MainPage();
+        }
+```
 ### LoginViewModel.cs  (3)
 Criar um ViewModel para controlar a View acabada de criar. Criar em ViewModels -> LoginViewModel.cs
 
